@@ -1,0 +1,20 @@
+<div class="register-card">
+  <h2>Register</h2>
+  <form (ngSubmit)="onSubmit()" autocomplete="off">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" [(ngModel)]="user.email" required />
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" [(ngModel)]="user.password" required />
+
+    <label for="confirmPassword">Confirm Password</label>
+    <input id="confirmPassword" name="confirmPassword" type="password" [(ngModel)]="user.confirmPassword" required />
+
+    <button type="submit">Register</button>
+    <div *ngIf="error" class="error">{{ error }}</div>
+  </form>
+  <p>
+    Already have an account?
+    <a routerLink="/sign-in">Sign in here</a>
+  </p>
+</div>

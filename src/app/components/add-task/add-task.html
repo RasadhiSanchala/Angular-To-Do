@@ -5,17 +5,16 @@
   </div>
   <form class="add-task-form" (ngSubmit)="onSubmit()" autocomplete="off">
     <label for="title">Task Title</label>
-    <input id="title" name="title" type="text" placeholder="Enter task title" required />
+    <input id="title" name="title" type="text" [(ngModel)]="task.title" placeholder="Enter task title" required />
 
     <label for="description">Description</label>
-    <textarea id="description" name="description" rows="3" placeholder="Describe the task"></textarea>
+    <textarea id="description" name="description" rows="3" [(ngModel)]="task.description" placeholder="Describe the task"></textarea>
 
     <label for="due">Due Date</label>
-    <input id="due" name="due" type="date" />
+    <input id="due" name="due" type="date" [(ngModel)]="task.due" />
 
     <button type="submit">Add Task</button>
   </form>
 </div>
-
 
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
