@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import {Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
-import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-add-task',
@@ -12,19 +11,32 @@ import { Task } from '../../models/task.model';
   styleUrls: ['./add-task.css']
 })
 export class AddTask {
-  task: Partial<Task> = {
-    title: '',
-    description: '',
-    due: ''
-  };
-
-  constructor(private taskService: TaskService, private router: Router) {}
+  constructor(private taskService: TaskService, private router: Router) { }
 
   onSubmit() {
-    // Provide a default for required fields if needed
-    if (!this.task.title) { return; }
-    this.taskService.addTask(this.task as Task).subscribe(() => {
-      this.router.navigate(['/tasks']);
-    });
+    const form = document.querySelector('form') as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const title = formData.get('title') as string;
+    const description = formData.get('description') as string;
+    const due = formData.get('due') as string;
+
+    if (title.trim()) {
+      const newTask = {
+        title: title.trim(),
+        description: description?.trim() || '',
+        completed: false
+      };
+
+      this.taskService.addTask(newTask).subscribe({
+        next: () => {
+          form.reset();
+          this.router.navigate(['/tasks']);
+        },
+        error: (error) => {
+          console.error('Error adding task:', error);
+        }
+      });
+    }
   }
 }
